@@ -1,53 +1,58 @@
 package day8oops;
 
 /*
- * Calculate Wages till a condition of total working hours or
- * days is reached for a month
- * assuming 100 days and 20 days
+ * Refactoring the Code to write a Class Method to Compute Employee Wage
  */
 public class EmpComputation {
 
-	public static final int IS_FULL_TIME = 1;
-	public static final int SALARY_PER_HR = 20;
-	public static final int IS_PART_TIME = 2;
-	public static final int NO_OF_DAYS = 20;
-	public static final int MAX_HR_IN_MONTH = 100;
+	static final int IS_PRESENT = 1;
+	static final int IS_PART_TIME = 2;
 
-	public static void employeeAttendace() {
-		int Working_Hr = 0;
-		int TotalEmpHrs = 0;
-		int TotalEmpWorkingDay = 0;
-		
+	public static void employeeAttendace(int SALARY_PER_HOUR, int TOTAL_WORK_DAY, int MAX_WORKING_HOUR,
+			int FULL_DAY_WORKING_HOUR) {
+		int empCheck;
+		int empHr = 0;
+		int totalSalary = 0;
+		int day = 0;
+
 		/*
-		 * taking while loop for executing both the conditions 
+		 * using while to execute both the conditions
 		 */
-		while (TotalEmpHrs <= MAX_HR_IN_MONTH && TotalEmpWorkingDay < NO_OF_DAYS) {
-			TotalEmpWorkingDay++;
+		while (day < TOTAL_WORK_DAY && (empHr + FULL_DAY_WORKING_HOUR) <= MAX_WORKING_HOUR) {
+			day++;
 			
-			//random function using to get a wages in random
-			int empCheck = (int) Math.floor((Math.random() * 10) % 3);
+			//random function using to get a randomly values
+			empCheck = (int) (Math.floor(Math.random() * 10) % 3);
 
+			/*
+			 * using switch case statement to execute anyone one of the case
+			 */
 			switch (empCheck) {
-			case IS_FULL_TIME:
-				Working_Hr = 8;
+			case IS_PRESENT:
+				empHr += FULL_DAY_WORKING_HOUR;
 				break;
-			case IS_PART_TIME:
-				Working_Hr = 4;
-				break;
-			default:
-				Working_Hr = 0;
-			}
-			TotalEmpHrs += Working_Hr;
-			System.out.println("Day :  " + TotalEmpWorkingDay + "   Emp Hr : " + Working_Hr);
-		}
-		int totalEmpWage = TotalEmpHrs * SALARY_PER_HR;
 
-		System.out.println("Total Emp Wage : " + totalEmpWage);
+			case IS_PART_TIME:
+				empHr += (FULL_DAY_WORKING_HOUR / 2);
+				break;
+
+			default:
+				empHr += 0;
+				break;
+			}
+
+			System.out.println("Working day : " + day + " (Present : " + empCheck + ")");
+
+		}
+
+		totalSalary = empHr * SALARY_PER_HOUR;
+		System.out.println("Monthly Emp Wage : " + totalSalary + "\nTotal working hour : " + empHr);
+
 	}
 
 	public static void main(String[] args) {
 
-		EmpComputation.employeeAttendace(); //calling method
+		EmpComputation.employeeAttendace(20, 20, 100, 8);
 	}
 
 }
